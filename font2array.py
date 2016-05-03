@@ -33,7 +33,13 @@ def new_image(size):
 
 
 def load_font(filename):
-  return PIL.ImageFont.load(filename)
+  if filename.endswith(".pil"):
+    return PIL.ImageFont.load(filename)
+  elif filename.endswith(".ttf"):
+    return PIL.ImageFont.truetype(filename)
+
+  raise ValueError("Invalid file extention of a font file, {}"
+                   .format(filename))
 
 
 def image_to_array(image):
@@ -75,8 +81,8 @@ def main(args):
     font2array <font_file> <character_array_file> <font_array_file>
     font2array (-h | --help)
 
-  <font_file> must be in PIL format. (e.g. my_font.pil)
-  You should need pillow module to generate it.
+  <font_file> must be in PIL or TTF format. (e.g. my_font.pil or your_font.ttf)
+  You should need pillow module to generate PIL format font files.
 
   Options:
     -h --help   Show help.
