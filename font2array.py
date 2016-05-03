@@ -32,11 +32,11 @@ def new_image(size):
   return PIL.Image.new("L", size, color=background_color)
 
 
-def load_font(filename):
+def load_font(filename, ttf_size=16):
   if filename.endswith(".pil"):
     return PIL.ImageFont.load(filename)
   elif filename.endswith(".ttf"):
-    return PIL.ImageFont.truetype(filename)
+    return PIL.ImageFont.truetype(filename, size=ttf_size)
 
   raise ValueError("Invalid file extention of a font file, {}"
                    .format(filename))
@@ -46,17 +46,18 @@ def image_to_array(image):
   return numpy.array(image, dtype=numpy.uint8)
 
 
-def char_to_font(char, font_filename):
-  font = load_font(font_filename)
+def char_to_font(char, font_filename, ttf_size=None):
+  font = load_font(font_filename, ttf_size=ttf_size)
   return image_to_array(draw_char(
       new_image(font.getsize(representative_char)),
       char,
       font))
 
 
-def char_array_to_font_array(char_array, font_filename):
+def char_array_to_font_array(char_array, font_filename, ttf_size=None):
   assert char_array.ndim == 1
-  return numpy.array([char_to_font(char, font_filename) for char
+  return numpy.array([char_to_font(char, font_filename, ttf_size=ttf_size)
+                      for char
                       in [chr(code_point) for code_point in char_array]])
 
 
@@ -78,19 +79,21 @@ def save_font_array(font_array, filename):
 def main(args):
   """
   Usage:
-    font2array <font_file> <character_array_file> <font_array_file>
+    font2array [-s <size>] <font_file> <character_array_file> <font_array_file>
     font2array (-h | --help)
 
   <font_file> must be in PIL or TTF format. (e.g. my_font.pil or your_font.ttf)
   You should need pillow module to generate PIL format font files.
 
   Options:
-    -h --help   Show help.
+    -s --ttf-size <size>  Specify TTF font size.
+    -h --help             Show help.
   """
 
   font_array = char_array_to_font_array(
       load_char_array(args["<character_array_file>"]),
-      args["<font_file>"])
+      args["<font_file>"],
+      ttf_size=int(args["--ttf-size"]))
 
   save_font_array(font_array, args["<font_array_file>"])
 
