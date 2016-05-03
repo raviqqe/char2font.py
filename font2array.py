@@ -12,6 +12,7 @@ import PIL.ImageFont
 
 foreground_color = 255
 background_color = 0
+representative_char = 'A'
 
 
 
@@ -35,10 +36,14 @@ def load_font(filename):
   return PIL.ImageFont.load(filename)
 
 
+def image_to_array(image):
+  return numpy.array(image, dtype=numpy.uint8)
+
+
 def char_to_font(char, font_filename):
   font = load_font(font_filename)
-  return numpy.array(draw_char(
-      new_image(font.getsize(char)),
+  return image_to_array(draw_char(
+      new_image(font.getsize(representative_char)),
       char,
       font))
 
@@ -51,15 +56,12 @@ def char_array_to_font_array(char_array, font_filename):
 
 def load_char_array(filename):
   char_array = numpy.load(filename)
-  print(char_array.dtype)
   assert any(char_array.dtype == data_type
              for data_type in {numpy.uint8, numpy.uint16, numpy.uint32})
   return char_array
 
 
 def save_font_array(font_array, filename):
-  print(font_array)
-  print(font_array.dtype)
   assert font_array.dtype == numpy.uint8
   numpy.save(filename, font_array)
 
