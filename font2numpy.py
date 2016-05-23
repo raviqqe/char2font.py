@@ -87,7 +87,7 @@ def main(args):
 
   Options:
     -f --font-file        Specify a font file to render letters with.
-    -s --ttf-size <size>  Specify TTF font size.
+    -s --ttf-size <size>  Specify TTF font size. [default: 10]
     -h --help             Show help.
   """
 
