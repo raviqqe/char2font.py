@@ -56,9 +56,9 @@ def char_to_font(char, font_filename, ttf_size=None):
 
 def char_array_to_font_array(char_array, font_filename, ttf_size=None):
   assert char_array.ndim == 1
-  return numpy.array([char_to_font(char, font_filename, ttf_size=ttf_size)
-                      for char
-                      in [chr(code_point) for code_point in char_array]])
+  return numpy.array([
+      char_to_font(chr(code_point), font_filename, ttf_size=ttf_size)
+      for code_point in char_array])
 
 
 def load_char_array(filename):
