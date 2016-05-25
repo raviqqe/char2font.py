@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 import docopt
 import numpy
 import PIL.Image
@@ -20,11 +21,18 @@ representative_char = 'A'
 
 def draw_char(orig_image, char, font):
   image = orig_image.copy()
-  PIL.ImageDraw.Draw(image).text(
-      (0, 0),
-      char,
-      font=font,
-      fill=foreground_color)
+
+  try:
+    PIL.ImageDraw.Draw(image).text(
+        (0, 0),
+        char,
+        font=font,
+        fill=foreground_color)
+  except UnicodeEncodeError as exception:
+    print("Could not render the unicode character \\u{:04X}".format(ord(char)),
+          file=sys.stderr)
+    return orig_image
+
   return image
 
 
