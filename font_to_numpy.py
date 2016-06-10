@@ -87,8 +87,9 @@ def save_font_array(font_array, filename):
 def main(args):
   """
   Usage:
-    font2array [-s <size>] -f <font_file> <character_array_file> <font_array_file>
-    font2array (-h | --help)
+    font_to_numpy [-s <size>] -f <font_file>
+                  <character_array_file> <font_array_file>
+    font_to_numpy (-h | --help)
 
   <font_file> must be in PIL or TTF format. (e.g. my_font.pil or your_font.ttf)
   You should need pillow module to generate PIL format font files.
