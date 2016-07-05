@@ -13,7 +13,6 @@ import PIL.ImageFont
 
 foreground_color = 255
 background_color = 0
-representative_char = 'A'
 
 
 
@@ -54,7 +53,7 @@ def image_to_array(image):
   return numpy.array(image, dtype=numpy.uint8)
 
 
-def char_to_font(char, font_filename, ttf_size=None):
+def char_to_font(char, font_filename, *, representative_char, ttf_size=None):
   font = load_font(font_filename, ttf_size=ttf_size)
   return image_to_array(draw_char(
       new_image(font.getsize(representative_char)),
@@ -62,10 +61,17 @@ def char_to_font(char, font_filename, ttf_size=None):
       font))
 
 
-def char_array_to_font_array(char_array, font_filename, ttf_size=None):
+def char_array_to_font_array(char_array,
+                             font_filename,
+                             *,
+                             representative_char,
+                             ttf_size=None):
   assert char_array.ndim == 1
   return numpy.array([
-      char_to_font(chr(code_point), font_filename, ttf_size=ttf_size)
+      char_to_font(chr(code_point),
+                   font_filename,
+                   representative_char=representative_char,
+                   ttf_size=ttf_size)
       for code_point in char_array])
 
 
@@ -87,7 +93,7 @@ def save_font_array(font_array, filename):
 def main(args):
   """
   Usage:
-    font_to_numpy [-s <size>] -f <font_file>
+    font_to_numpy [-s <size>] [-c <char>] -f <font_file>
                   <character_array_file> <font_array_file>
     font_to_numpy (-h | --help)
 
@@ -97,13 +103,16 @@ def main(args):
   Options:
     -f --font-file        Specify a font file to render letters with.
     -s --ttf-size <size>  Specify TTF font size. [default: 10]
+    -c --char <char>      Specify a representative chararacter for rendering.
+                          [default: 'A']
     -h --help             Show help.
   """
 
   font_array = char_array_to_font_array(
       load_char_array(args["<character_array_file>"]),
       args["<font_file>"],
-      ttf_size=int(args["--ttf-size"]))
+      ttf_size=int(args["--ttf-size"]),
+      representative_char=args["--char"])
 
   save_font_array(font_array, args["<font_array_file>"])
 
