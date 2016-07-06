@@ -13,6 +13,7 @@ import PIL.ImageFont
 
 foreground_color = 255
 background_color = 0
+representative_char = 'A'
 
 
 
@@ -71,8 +72,14 @@ def char_array_to_font_array(char_array,
   font = load_font(font_filename, ttf_size=ttf_size)
   chars = [chr(code_point) for code_point in char_array]
 
-  return numpy.array([char_to_font(char, font, size=get_max_size(font, chars))
-                      for char in chars])
+  return numpy.array([
+      char_to_font(
+          char,
+          font,
+          size=(font.getsize(representative_char)
+                if font_filename.endswith(".pil") else
+                get_max_size(font, chars)))
+      for char in chars])
 
 
 def load_char_array(filename):
