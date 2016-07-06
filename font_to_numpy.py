@@ -13,7 +13,6 @@ import PIL.ImageFont
 
 foreground_color = 255
 background_color = 0
-representative_char = 'A'
 
 
 
@@ -54,19 +53,26 @@ def image_to_array(image):
   return numpy.array(image, dtype=numpy.uint8)
 
 
-def char_to_font(char, font_filename, ttf_size=None):
-  font = load_font(font_filename, ttf_size=ttf_size)
-  return image_to_array(draw_char(
-      new_image(font.getsize(representative_char)),
-      char,
-      font))
+def char_to_font(char, font, *, size):
+  return image_to_array(draw_char(new_image(size), char, font))
 
 
-def char_array_to_font_array(char_array, font_filename, ttf_size=None):
+def get_max_size(font, chars):
+  widths, heights = zip(*[font.getsize(char) for char in chars])
+  return (max(widths), max(heights))
+
+
+def char_array_to_font_array(char_array,
+                             font_filename,
+                             *,
+                             ttf_size=None):
   assert char_array.ndim == 1
-  return numpy.array([
-      char_to_font(chr(code_point), font_filename, ttf_size=ttf_size)
-      for code_point in char_array])
+
+  font = load_font(font_filename, ttf_size=ttf_size)
+  chars = [chr(code_point) for code_point in char_array]
+
+  return numpy.array([char_to_font(char, font, size=get_max_size(font, chars))
+                      for char in chars])
 
 
 def load_char_array(filename):
