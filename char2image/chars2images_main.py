@@ -18,17 +18,12 @@ def get_args():
 def main():
     args = get_args()
 
-    chars = [line.strip() for line in args.character_file]
-
-    char_to_image = char2image.chars_to_images(
-        set(chars),
-        char2image.filename_to_font(args.font_file, size=args.size))
-
-    print(json.dumps([(char_to_image[char]
-                       if char in char_to_image else
-                       char_to_image[args.unknown_char])
-                      for char in chars],
-                     ensure_ascii=False))
+    print(json.dumps(
+        char2image.chars_to_images(
+            [line.strip() for line in args.character_file],
+            char2image.filename_to_font(args.font_file, args.size),
+            unknown_char=args.unknown_char),
+        ensure_ascii=False))
 
 
 if __name__ == '__main__':

@@ -18,9 +18,9 @@ def main():
     args = get_args()
 
     print(json.dumps(
-        char2image.chars_to_images(
+        char2image.char_to_image_dict(
             {char for char in args.document_file.read()},
-            char2image.filename_to_font(args.font_file, size=args.size)),
+            char2image.filename_to_font(args.font_file, args.size)),
         ensure_ascii=False))
 
 
