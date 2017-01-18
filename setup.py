@@ -19,7 +19,7 @@ setuptools.setup(
                 'chars2images=char2image.chars2images_main:main'
             ],
     },
-    install_requires=['docopt', 'numpy', 'pillow'],
+    install_requires=['numpy', 'pillow'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
