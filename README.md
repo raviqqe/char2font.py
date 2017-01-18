@@ -5,8 +5,7 @@
 [![Build Status](https://travis-ci.org/raviqqe/char2image.py.svg?branch=master)](https://travis-ci.org/raviqqe/char2image.py)
 [![License](https://img.shields.io/badge/license-unlicense-lightgray.svg)](https://unlicense.org)
 
-Creates a dictionary of character to font image in JSON format.
-The current version accepts only TTF fonts.
+Converts characters to font images in Python.
 
 
 ## License
