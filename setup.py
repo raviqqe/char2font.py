@@ -3,20 +3,20 @@ import setuptools
 
 
 setuptools.setup(
-    name='char2font',
+    name='char2image',
     version=re.search(r"__version__ *= *'([0-9]+\.[0-9]+\.[0-9]+)' *\n",
-                      open('char2font/__init__.py').read()).group(1),
+                      open('char2image/__init__.py').read()).group(1),
     description='Creates a dictionary of character to font image in JSON format.',
     long_description=open('README.md').read(),
     license='Public Domain',
     author='Yota Toyama',
     author_email='raviqqe@gmail.com',
-    url='https://github.com/raviqqe/char2font.py/',
-    packages=['char2font'],
+    url='https://github.com/raviqqe/char2image.py/',
+    packages=['char2image'],
     entry_points={
             'console_scripts': [
-                'char2font=char2font.__main__:main',
-                'chars2fonts=char2font.chars2fonts_main:main'
+                'char2image=char2image.__main__:main',
+                'chars2images=char2image.chars2images_main:main'
             ],
     },
     install_requires=['docopt', 'numpy', 'pillow'],
