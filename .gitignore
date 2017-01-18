@@ -1,7 +1,12 @@
-*.bdf
-*.pbm
-*.pcf
-*.pil
 *.ttf
-*.npy
 *.json
+__pycache__
+build
+dist
+*.egg-info
+.venv
+.cache
+.venv
+*.zip
+*.txt
+mplus-*

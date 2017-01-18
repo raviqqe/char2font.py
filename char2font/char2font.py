@@ -1,13 +1,11 @@
-#!/usr/bin/env python
-
-import json
 import sys
 
-import docopt
 import numpy
 import PIL.Image
 import PIL.ImageDraw
-import PIL.ImageFont
+
+
+__all__ = ['char_to_image', 'chars_to_images']
 
 
 FOREGROUND_COLOR = 255
@@ -36,30 +34,3 @@ def chars_to_images(chars, font):
     pairs = {char: char_to_image(char, font, size=size) for char in chars}
     return {char: image.tolist() for char, image in pairs.items()
             if image is not None and (image != BACKGROUND_COLOR).any()}
-
-
-def main(args):
-    """
-    Usage:
-      char2font [-s <size>] -f <font_file> <document_file>
-      char2font (-h | --help)
-
-    Outputs a map of character to font image in JSON format.
-
-    Options:
-      -f --font-file <font_file>    Specify a TTF font file.
-      -s --size <size>              Specify font size. [default: 16]
-      -h --help                     Show help.
-    """
-
-    with open(args['<document_file>']) as phile:
-        print(json.dumps(
-            chars_to_images(
-                {char for char in phile.read()},
-                PIL.ImageFont.truetype(args['--font-file'],
-                                       size=int(args['--size']))),
-            ensure_ascii=False))
-
-
-if __name__ == '__main__':
-    main(docopt.docopt(main.__doc__))
