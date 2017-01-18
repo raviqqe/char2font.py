@@ -6,6 +6,7 @@
 [![License](https://img.shields.io/badge/license-unlicense-lightgray.svg)](https://unlicense.org)
 
 Creates a dictionary of character to font image in JSON format.
+The current version accepts only TTF fonts.
 
 
 ## License
