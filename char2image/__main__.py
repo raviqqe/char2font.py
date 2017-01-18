@@ -22,7 +22,7 @@ def main():
     print(json.dumps(
         char2image.chars_to_images(
             {char for char in args.document_file.read()},
-            PIL.ImageFont.truetype(args.font_file, size=int(args.size))),
+            PIL.ImageFont.truetype(args.font_file, size=args.size)),
         ensure_ascii=False))
 
 
