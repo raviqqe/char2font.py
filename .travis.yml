@@ -1,0 +1,16 @@
+dist: trusty
+
+language: python
+
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+
+addons:
+  apt:
+    packages:
+      - ruby
+
+script:
+  - rake test
