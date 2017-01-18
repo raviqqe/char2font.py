@@ -3,9 +3,10 @@ import sys
 import numpy
 import PIL.Image
 import PIL.ImageDraw
+import PIL.ImageFont
 
 
-__all__ = ['char_to_image', 'chars_to_images']
+__all__ = ['char_to_image', 'chars_to_images', 'filename_to_font']
 
 
 FOREGROUND_COLOR = 255
@@ -34,3 +35,7 @@ def chars_to_images(chars, font):
     pairs = {char: char_to_image(char, font, size=size) for char in chars}
     return {char: image.tolist() for char, image in pairs.items()
             if image is not None and (image != BACKGROUND_COLOR).any()}
+
+
+def filename_to_font(filename, size):
+    return PIL.ImageFont.truetype(filename, size=size)

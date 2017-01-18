@@ -2,8 +2,6 @@ import argparse
 import json
 import sys
 
-import PIL.ImageFont
-
 from . import char2image
 
 
@@ -24,7 +22,7 @@ def main():
 
     char_to_image = char2image.chars_to_images(
         set(chars),
-        PIL.ImageFont.truetype(args.font_file, size=args.size))
+        char2image.filename_to_font(args.font_file, size=args.size))
 
     print(json.dumps([(char_to_image[char]
                        if char in char_to_image else
