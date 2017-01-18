@@ -12,6 +12,11 @@ task :test => :clean do
   sh 'wget http://font.sumomo.ne.jp/fontdata-c2157415/k-font.zip'
   sh 'unzip *.zip'
   vsh 'char2font -f keifont.ttf data/foo.txt'
+  vsh 'char2font -s 64 -f keifont.ttf data/foo.txt'
+  sh "sed 's/./\\0\\n/g' data/foo.txt | grep -v '^[[:blank:]]*$' > chars.txt"
+  vsh 'chars2fonts -f keifont.ttf chars.txt'
+  vsh 'chars2fonts -s 13 -f keifont.ttf chars.txt'
+  vsh 'chars2fonts -u @ -f keifont.ttf chars.txt'
 end
 
 

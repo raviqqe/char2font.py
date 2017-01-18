@@ -14,7 +14,10 @@ setuptools.setup(
     url='https://github.com/raviqqe/char2font.py/',
     packages=['char2font'],
     entry_points={
-            'console_scripts': ['char2font=char2font.__main__:main']
+            'console_scripts': [
+                'char2font=char2font.__main__:main',
+                'chars2fonts=char2font.chars2fonts_main:main'
+            ],
     },
     install_requires=['docopt', 'numpy', 'pillow'],
     classifiers=[
